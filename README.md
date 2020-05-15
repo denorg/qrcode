@@ -7,14 +7,14 @@ This is a port of [zenozeng/node-yaqrcode](https://github.com/zenozeng/node-yaqr
 [![Test CI](https://github.com/denorg/qrcode/workflows/Test%20CI/badge.svg)](https://github.com/denorg/qrcode/actions)
 
 ```ts
-import { yaqrcode } from "https://raw.githubusercontent.com/denorg/qrcode/master/mod.ts";
-const base64Image = yaqrcode("Hello, world!");
+import { qrcode } from "https://raw.githubusercontent.com/denorg/qrcode/master/mod.ts";
+const base64Image = qrcode("Hello, world!");
 ```
 
 You can also add a custom size by specifying `size` in the second parameter:
 
 ```ts
-const fixedSizeImage = yaqrcode("Hello, world!", { size: 500 });
+const fixedSizeImage = qrcode("Hello, world!", { size: 500 });
 ```
 
 Alternatively, you can use it directly from the CLI:
@@ -26,7 +26,7 @@ deno run https://raw.githubusercontent.com/denorg/qrcode/master/cli.ts <text>
 You can also install it globally using the following:
 
 ```bash
-deno install qrcode https://raw.githubusercontent.com/oplik0/deno-yaqrcode/master/cli.ts
+deno install qrcode https://raw.githubusercontent.com/denorg/qrcode/master/cli.ts
 ```
 
 Then, the package is available to run:
