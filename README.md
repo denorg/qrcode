@@ -8,8 +8,10 @@ This is a port of [zenozeng/node-yaqrcode](https://github.com/zenozeng/node-yaqr
 
 ```ts
 import { qrcode } from "https://raw.githubusercontent.com/denorg/qrcode/master/mod.ts";
-const base64Image = qrcode("bitcoin:ADDRESS?amount=0.5&label=ORDER");
+const base64Image = qrcode("bitcoin:ADDRESS?amount=0.5&label=ORDER"); // data:image/gif;base64,...
 ```
+
+![QR code](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/240px-QR_code_for_mobile_English_Wikipedia.svg.png)
 
 You can also add a custom size by specifying `size` in the second parameter:
 
