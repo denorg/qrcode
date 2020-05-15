@@ -8,13 +8,13 @@ This is a port of [zenozeng/node-yaqrcode](https://github.com/zenozeng/node-yaqr
 
 ```ts
 import { qrcode } from "https://raw.githubusercontent.com/denorg/qrcode/master/mod.ts";
-const base64Image = qrcode("Hello, world!");
+const base64Image = qrcode("bitcoin:ADDRESS?amount=0.5&label=ORDER");
 ```
 
 You can also add a custom size by specifying `size` in the second parameter:
 
 ```ts
-const fixedSizeImage = qrcode("Hello, world!", { size: 500 });
+const fixedSizeImage = qrcode("bitcoin:ADDRESS?amount=0.5&label=ORDER", { size: 500 });
 ```
 
 Alternatively, you can use it directly from the CLI:
