@@ -1,10 +1,10 @@
-// @deno-types="./_qrcode.d.ts"
+// @deno-types="./qrcode.d.ts"
 import { qrcode as _qrcode } from "./qrcode.js";
 
 export async function qrcode(
   text: string,
   options?: Options,
-): Promise<_QRCode> {
+): Promise<QRCode> {
   options = options || {};
   const typeNumber: TypeNumber = options.typeNumber || 4;
   const errorCorrectLevel: ErrorCorrectionLevel = options.errorCorrectLevel ||
