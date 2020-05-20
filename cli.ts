@@ -1,4 +1,9 @@
-import { yaqrcode } from "./mod.ts";
+import { qrcode } from "./mod.ts";
 
-console.log(`${Deno.args.join(" ")}:
-${await yaqrcode(Deno.args.join(" "))}`);
+if (import.meta.main) {
+  for (let arg of Deno.args) {
+    console.log(`
+${arg}:
+${await qrcode(arg)}`);
+  }
+}
