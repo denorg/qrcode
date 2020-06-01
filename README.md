@@ -4,7 +4,13 @@ Generate QR codes in Deno, as base64-encoded images, completely dependency-free 
 
 This is a port of [zenozeng/node-yaqrcode](https://github.com/zenozeng/node-yaqrcode), which itself is a port of the QR code generator in the d-project.
 
-[![Test CI](https://github.com/denorg/qrcode/workflows/Test%20CI/badge.svg)](https://github.com/denorg/qrcode/actions)
+[![Deno CI](https://github.com/denorg/qrcode/workflows/Deno%20CI/badge.svg)](https://github.com/denorg/qrcode/actions)
+[![GitHub](https://img.shields.io/github/license/denorg/qrcode)](https://github.com/denorg/qrcode/blob/master/LICENSE)
+[![Contributors](https://img.shields.io/github/contributors/denorg/qrcode)](https://github.com/denorg/qrcode/graphs/contributors)
+[![Deno Starter](https://img.shields.io/badge/deno-starter-brightgreen)](https://denorg.github.io/starter/)
+[![Made by Denorg](https://img.shields.io/badge/made%20by-denorg-0082fb)](https://github.com/denorg)
+[![TypeScript](https://img.shields.io/badge/types-TypeScript-blue)](https://github.com/denorg/qrcode)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
 ## ⭐ Getting started
 
