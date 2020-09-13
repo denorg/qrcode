@@ -45,7 +45,7 @@ deno run https://deno.land/x/qrcode/cli.ts <text>
 You can also install it globally using the following:
 
 ```bash
-deno install qrcode https://deno.land/x/qrcode/cli.ts
+deno install https://deno.land/x/qrcode/cli.ts
 ```
 
 Then, the package is available to run:
