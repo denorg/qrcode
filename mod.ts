@@ -4,7 +4,7 @@ import { qrcode as _qrcode } from "./qrcode.js";
 export async function qrcode(
   text: string,
   options?: Options,
-): Promise<QRCode> {
+): Promise<string> {
   options = options || {};
   const typeNumber: TypeNumber = options.typeNumber || 4;
   const errorCorrectLevel: ErrorCorrectionLevel = options.errorCorrectLevel ||
