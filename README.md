@@ -24,7 +24,7 @@ const base64Image = qrcode("bitcoin:ADDRESS?amount=0.5&label=ORDER"); // data:im
 You can also add a custom size by specifying `size` in the second parameter:
 
 ```ts
-const fixedSizeImage = qrcode("bitcoin:ADDRESS?amount=0.5&label=ORDER", { size: 500 });
+const fixedSizeImage = await qrcode("bitcoin:ADDRESS?amount=0.5&label=ORDER", { size: 500 });
 ```
 ### CLI with [DPX](https://github.com/denorg/dpx)
 
