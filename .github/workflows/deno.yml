@@ -21,12 +21,15 @@ jobs:
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
-      - name: Tests
-        run: deno test --allow-read
+      - name: Tests with coverage
+        run: deno test --allow-read --coverage=coverage
+      - name: Coverage summary
+        run: deno coverage coverage
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    needs: build
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, '[skip ci]') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4

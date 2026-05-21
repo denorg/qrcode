@@ -1,4 +1,7 @@
-import { assertEquals } from "https://deno.land/std/testing/asserts.ts";
+import {
+  assert,
+  assertEquals,
+} from "https://deno.land/std@0.224.0/testing/asserts.ts";
 import { qrcode } from "./mod.ts";
 
 Deno.test("should return dataurl string of generated qrcode", async function (): Promise<
@@ -13,4 +16,61 @@ Deno.test("should return dataurl string of generated qrcode", async function ():
     ),
     code,
   );
+});
+
+function decodeGifDataUrl(dataUrl: string): Uint8Array {
+  const prefix = "data:image/gif;base64,";
+  assert(dataUrl.startsWith(prefix));
+
+  return Uint8Array.from(
+    atob(dataUrl.slice(prefix.length)),
+    (character) => character.charCodeAt(0),
+  );
+}
+
+function readUInt16LittleEndian(bytes: Uint8Array, offset: number): number {
+  return bytes[offset] | (bytes[offset + 1] << 8);
+}
+
+function assertGifDimensionsAtMost(
+  dataUrl: string,
+  requestedSize: number,
+): void {
+  const bytes = decodeGifDataUrl(dataUrl);
+  const width = readUInt16LittleEndian(bytes, 6);
+  const height = readUInt16LittleEndian(bytes, 8);
+
+  assertEquals(new TextDecoder().decode(bytes.slice(0, 6)), "GIF87a");
+  assert(width > 0 && width <= requestedSize);
+  assert(height > 0 && height <= requestedSize);
+}
+
+Deno.test("generates valid GIFs for all error correction levels", async (): Promise<void> => {
+  const outputs = await Promise.all(
+    (["L", "M", "Q", "H"] as const).map((errorCorrectLevel) =>
+      qrcode("coverage options", {
+        errorCorrectLevel,
+        size: 256,
+        typeNumber: 4,
+      })
+    ),
+  );
+
+  for (const output of outputs) {
+    assertGifDimensionsAtMost(output, 256);
+  }
+
+  assertEquals(new Set(outputs).size, outputs.length);
+});
+
+Deno.test("grows beyond the requested type number when text does not fit", async (): Promise<void> => {
+  const tooLargeForTypeOne = "Deno QR coverage ".repeat(10);
+
+  const generated = await qrcode(tooLargeForTypeOne, {
+    errorCorrectLevel: "H",
+    size: 300,
+    typeNumber: 1,
+  });
+
+  assertGifDimensionsAtMost(generated, 300);
 });
