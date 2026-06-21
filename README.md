@@ -16,7 +16,7 @@ This is a port of [zenozeng/node-yaqrcode](https://github.com/zenozeng/node-yaqr
 
 ```ts
 import { qrcode } from "https://deno.land/x/qrcode/mod.ts";
-const base64Image = qrcode("bitcoin:ADDRESS?amount=0.5&label=ORDER"); // data:image/gif;base64,...
+const base64Image = await qrcode("bitcoin:ADDRESS?amount=0.5&label=ORDER"); // data:image/gif;base64,...
 ```
 
 ![QR code](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/240px-QR_code_for_mobile_English_Wikipedia.svg.png)
@@ -26,6 +26,23 @@ You can also add a custom size by specifying `size` in the second parameter:
 ```ts
 const fixedSizeImage = await qrcode("bitcoin:ADDRESS?amount=0.5&label=ORDER", { size: 500 });
 ```
+
+### Deno.serve example
+
+The `examples/server.ts` file exposes QR codes over HTTP using `Deno.serve`:
+
+```bash
+deno run --allow-net examples/server.ts
+```
+
+Then open a URL like this to receive a GIF response:
+
+```text
+http://localhost:4000/?data=Hello%20World!&size=250&typeNumber=5&errorCorrection=L
+```
+
+Short query parameters are also supported for compact URLs: `d`, `s`, `v`, and `e`.
+
 ### CLI with [DPX](https://github.com/denorg/dpx)
 
 After [installing DPX](https://github.com/denorg/dpx), you can directly use the CLI using the `dpx` command:
