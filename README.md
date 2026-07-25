@@ -27,6 +27,29 @@ You can also add a custom size by specifying `size` in the second parameter:
 const fixedSizeImage = await qrcode("bitcoin:ADDRESS?amount=0.5&label=ORDER", { size: 500 });
 ```
 
+### Return value
+
+`qrcode` is asynchronous. It returns a `Promise<string>` that resolves to a
+complete GIF data URL (`data:image/gif;base64,...`), not a QR code object. You
+can use that string directly as an image source:
+
+```ts
+const imageSource: string = await qrcode("Hello world");
+const html = `<img src="${imageSource}" alt="QR code">`;
+```
+
+To save the generated QR code as a GIF in Deno, decode the data URL first:
+
+```ts
+const dataUrl = await qrcode("Hello world");
+const base64 = dataUrl.replace(/^data:image\/gif;base64,/, "");
+const bytes = Uint8Array.from(
+  atob(base64),
+  (character) => character.charCodeAt(0),
+);
+await Deno.writeFile("qrcode.gif", bytes);
+```
+
 ### Deno.serve example
 
 The `examples/server.ts` file exposes QR codes over HTTP using `Deno.serve`:
