@@ -1,0 +1,10 @@
+{
+    "name": "qrcode",
+    "description": "📇 Generate QR code images in Deno",
+    "homepage": "https://github.com/denorg/qrcode",
+    "files": [
+    "./**/*.ts",
+    "README.md"
+    ],
+    "entry": "./mod.ts"
+}
