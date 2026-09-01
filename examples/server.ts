@@ -135,7 +135,11 @@ export async function handleRequest(request: Request): Promise<Response> {
   });
   const gif = dataUrlToBytes(dataUrl);
 
-  return new Response(request.method === "HEAD" ? null : gif, {
+  // Deno 2's Response type requires a Uint8Array backed by an ArrayBuffer.
+  // Copying preserves the GIF bytes while making the body valid in Deno 1 and 2.
+  const responseBody = request.method === "HEAD" ? null : new Uint8Array(gif);
+
+  return new Response(responseBody, {
     status: 200,
     headers: {
       ...commonHeaders,
