@@ -15,9 +15,14 @@ This is a port of [zenozeng/node-yaqrcode](https://github.com/zenozeng/node-yaqr
 ## ⭐ Getting started
 
 ```ts
-import { qrcode } from "https://deno.land/x/qrcode/mod.ts";
+import { qrcode } from "https://raw.githubusercontent.com/denorg/qrcode/da60b2680b4b56da03c635260e19f24f2fd0a44d/mod.ts";
 const base64Image = await qrcode("bitcoin:ADDRESS?amount=0.5&label=ORDER"); // data:image/gif;base64,...
 ```
+
+The [deno.land/x/qrcode tag](https://deno.land/x/qrcode) is still at v2.0.0
+and does not include the current return type fix ([#7](https://github.com/denorg/qrcode/issues/7)).
+The source-revision URL above is pinned so the example type-checks without
+claiming a release that has not happened.
 
 ![QR code](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/240px-QR_code_for_mobile_English_Wikipedia.svg.png)
 
@@ -49,6 +54,29 @@ const bytes = Uint8Array.from(
 );
 await Deno.writeFile("qrcode.gif", bytes);
 ```
+
+The generator only produces GIF data URLs; there is no option to request PNG
+output. If you need a PNG, decode the GIF and convert its first frame with an
+image library (this optional dependency is not needed to generate QR codes):
+
+```ts
+import { GIF } from "jsr:@matmen/imagescript@1.3.1";
+import { qrcode } from "https://raw.githubusercontent.com/denorg/qrcode/da60b2680b4b56da03c635260e19f24f2fd0a44d/mod.ts";
+
+const dataUrl = await qrcode("Hello world", { size: 250 });
+const base64 = dataUrl.slice("data:image/gif;base64,".length);
+const gifBytes = Uint8Array.from(
+  atob(base64),
+  (character) => character.charCodeAt(0),
+);
+const gif = await GIF.decode(gifBytes, true);
+await Deno.writeFile("qrcode.png", await gif[0].encode());
+```
+
+Save this as `convert.ts` and run it with
+`deno run --allow-write --allow-net=jsr.io convert.ts`. ImageScript loads its
+WebAssembly encoder from JSR at runtime, so it needs access to `jsr.io` even
+when its import is cached.
 
 ### Deno.serve example
 
